@@ -2,6 +2,8 @@
 
 This is a 2D Infinite Runner Game made with Unity. To play the game, download the latest build [here](https://github.com/wayne-wu/2d-BlackStrider/tree/master/DevBuild).
 
+Will be making WebGL and mobile builds shortly. 
+
 ##Screenshots
 
 ![screenshot1](https://raw.githubusercontent.com/wayne-wu/2d-BlackStrider/master/Screenshots/screenshot1.png)
