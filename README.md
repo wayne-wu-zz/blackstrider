@@ -2,7 +2,7 @@
 
 ##Screenshots
 
-![screenshot1](https://github.com/wayne-wu/2d-BlackStrider/Screenshots/screenshot1)
+![screenshot1](https://github.com/wayne-wu/2d-BlackStrider/Screenshots/screenshot1.png)
 
 
 
