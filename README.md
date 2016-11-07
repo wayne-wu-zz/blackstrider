@@ -1,6 +1,8 @@
-# 2D Unity Game: StriderVsUnity
+# Black Strider: A 2D Infinite Runner Game
 
-This is a 2D survival game made with Unity
+##Screenshots
+
+![screenshot1](https://github.com/wayne-wu/2d-BlackStrider/Screenshots/screenshot1)
 
 
 
