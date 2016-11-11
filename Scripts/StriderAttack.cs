@@ -20,7 +20,7 @@ public class StriderAttack : MonoBehaviour {
     private AttackStateMachine[] attackStates;
     private StriderControl control;
     private int currentComboState = 0;
-    private int maxCombo = 3;
+    private int maxCombo = 4;
     private float centerX;
     private float centerY;
     private bool attacking = false;
@@ -34,7 +34,8 @@ public class StriderAttack : MonoBehaviour {
         attackStates = new AttackStateMachine[maxCombo];
         attackStates[0] = animator.GetBehaviour<Attack1StateMachine>();
         attackStates[1] = animator.GetBehaviour<Attack2StateMachine>();
-        attackStates[2] = animator.GetBehaviour<Attack3StateMachine>();
+        attackStates[2] = animator.GetBehaviour<Attack4StateMachine>();
+        attackStates[3] = animator.GetBehaviour<Attack3StateMachine>();
         control = GetComponent<StriderControl>();
         foreach(AttackStateMachine att in attackStates)
         {
@@ -101,6 +102,11 @@ public class StriderAttack : MonoBehaviour {
     public void Attack3()
     {
         StartCoroutine(DetectContacts(attackTracker.position, Attack3Radius));
+    }
+
+    public void Attack4()
+    {
+        StartCoroutine(DetectContacts(attackTracker.position, 1.5f));
     }
 
     public void BigAttack1()

@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
     public GameObject enemyPrefab;
 
     public int maxEnemies = 10;
-    public int experiencePerKill = 25;
+    public int experiencePerKill = 20;
     public int startingLives = 3;
     public int maxLives = 5;
     public float maxSpawnFrequency = 0.5f;
@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour {
         if (skillPoints > 0)
         {
             heroAttack.AttackMultiplier++;
-            heroAttack.AttackPoints += 3;
+            heroAttack.AttackPoints += 2;
             DecreaseSkillPoint();
         }
     }
