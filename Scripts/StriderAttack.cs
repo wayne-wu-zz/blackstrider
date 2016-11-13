@@ -16,7 +16,6 @@ public class StriderAttack : MonoBehaviour {
     public float BigAttack1Radius = 3.0f;
 
     private Animator animator;
-    private AttackStateMachine attackState;
     private AttackStateMachine[] attackStates;
     private StriderControl control;
     private int currentComboState = 0;
@@ -24,18 +23,24 @@ public class StriderAttack : MonoBehaviour {
     private float centerX;
     private float centerY;
     private bool attacking = false;
+    private float attackSpeed = 1.0f;
+    private float maxAttackSpeed = 3.0f;
+
+    private Queue<int> attackQueue; 
 
     private const string COMBO_STATE = "AttackCombo";
 
 	// Use this for initialization
 	void Start () {
         animator = GetComponent<Animator>();
-        attackState = animator.GetBehaviour<AttackStateMachine>();
         attackStates = new AttackStateMachine[maxCombo];
         attackStates[0] = animator.GetBehaviour<Attack1StateMachine>();
         attackStates[1] = animator.GetBehaviour<Attack2StateMachine>();
         attackStates[2] = animator.GetBehaviour<Attack4StateMachine>();
         attackStates[3] = animator.GetBehaviour<Attack3StateMachine>();
+
+        maxCombo = attackStates.Length;
+
         control = GetComponent<StriderControl>();
         foreach(AttackStateMachine att in attackStates)
         {
@@ -46,12 +51,32 @@ public class StriderAttack : MonoBehaviour {
 
         centerX = GetComponent<Renderer>().bounds.size.x / 2.0f;
         centerY = GetComponent<Renderer>().bounds.size.y / 2.0f;
+
+        attackQueue = new Queue<int>();
     }
 
-    void Update()
+    public void SetAttack(int combo)
     {
-        print(transform.position);
-        //print(isAttacking());
+        animator.SetInteger(COMBO_STATE, combo);
+    }
+
+    public void NextAttack()
+    {
+        if (attackQueue.Count > 0)
+            SetAttack(attackQueue.Dequeue());
+        else
+        {
+            Reset();
+        }
+    }
+
+    public void IncreaseAttackSpeed()
+    {
+        if(attackSpeed < maxAttackSpeed)
+        {
+            attackSpeed += 0.2f;
+            animator.SetFloat("attackSpeed", attackSpeed);
+        }
     }
 
     public void BasicAttack()
@@ -60,29 +85,21 @@ public class StriderAttack : MonoBehaviour {
         animator.SetInteger("AnimState", 2);
 
         currentComboState++;
+
         if (currentComboState <= maxCombo)
         {
-           // print("ComboState:" + currentComboState);
-            if (isAttacking()&&currentComboState-2>=0)
-                attackStates[currentComboState-2].SetNextAttack(true);
-            SetComboState(currentComboState);
+            if (currentComboState == 1)
+                SetAttack(currentComboState);
+            else
+                attackQueue.Enqueue(currentComboState);
         }
-        else
-        {
-            Reset();
-        }
-    }
-
-    public void SetComboState(int num)
-    {
-        currentComboState = num;
-        animator.SetInteger(COMBO_STATE, num);
     }
 
     public void Reset()
     {
         currentComboState = 0;
         animator.SetInteger(COMBO_STATE, currentComboState);
+        control.Idle();
     }
 
 
@@ -165,25 +182,6 @@ public class StriderAttack : MonoBehaviour {
     public void SetAttacking(bool flag)
     {
         attacking = flag;
-    }
-
-
-    public class Attack
-    {
-        public int attack_id;
-        public AttackStateMachine state;
-
-        public Attack(int id, AttackStateMachine state)
-        {
-            this.attack_id = id;
-            this.state = state;
-        }
-
-        public void DoAttack()
-        {
-
-        }
-
     }
 
 }

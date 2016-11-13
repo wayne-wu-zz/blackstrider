@@ -35,19 +35,24 @@ public class StriderControl : MonoBehaviour {
     void Update()
     {
 
+        //Jumping
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
         }
 
+        //Basic Attack
         if (Input.GetMouseButtonDown(0))
         {
+            //Readjust facing direction based on mouse position
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
             if ((mousePos.x < transform.position.x && facingRight) || (mousePos.x > transform.position.x && !facingRight))
                 Flip();
+
             unInterruptable = true;
             attack.BasicAttack();
         }
+
         //if (Input.GetMouseButtonDown(1))
         //{
         //    unInterruptable = true;

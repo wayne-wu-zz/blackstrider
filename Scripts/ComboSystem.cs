@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
-using UnityEditor.Animations; 
 using System.Collections.Generic;
 using System.Collections;
 
@@ -13,7 +12,8 @@ public class ComboSystem : MonoBehaviour {
         private int AttId;
         public float attackPt = 0;
         public Animation animation;
-        public UnityAction attackEvent;
+        public UnityEvent attackEvent = new UnityEvent();
+        private StateMachineBehaviour stateMachineBehaviour;
 
         public void DoAttack()
         {
@@ -22,8 +22,9 @@ public class ComboSystem : MonoBehaviour {
     }
 
     public List<Attack> attacks = new List<Attack>();
-    public GameObject globalScript; 
-    private AnimatorController animController; 
+    public GameObject globalScript;
+    public GameObject stateMachineBehaviour; 
+    //private AnimatorController animController; 
     private Animator animator;
 
 

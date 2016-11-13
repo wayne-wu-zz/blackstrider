@@ -75,6 +75,7 @@ public class EnemyMovement : MonoBehaviour {
         {
             transform.position += new Vector3(0f, 0.01f, 0f);
         }
+        //Check if it's stuck in Terrain
         if (Physics2D.OverlapPoint(transform.position, groundLayer))
             Destroy(gameObject);
 

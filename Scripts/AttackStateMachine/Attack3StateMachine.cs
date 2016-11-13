@@ -5,7 +5,6 @@ public class Attack3StateMachine : AttackStateMachine {
 
     public override void Attack()
     {
-        base.Attack();
-        Debug.Log("Attack 3");
+        attackControl.Attack3(); 
     }
 }

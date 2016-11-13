@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour {
     {
         get
         {
-            return 100 + (killCount / 2);
+            return 100 + (killCount);
         }
     }
 
@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour {
     private Button GUIAddAttack;
     private Button GUIAddSpeed;
     private Text GUILives;
+    private Text GUIInstruction;
 
 
     // Use this for initialization
@@ -106,14 +107,18 @@ public class GameManager : MonoBehaviour {
         GUIAddAttack = transform.Find("ExpCanvas/ExpUI/SkillsUI/AddAttack").gameObject.GetComponent<Button>();
         GUIAddSpeed = transform.Find("ExpCanvas/ExpUI/SkillsUI/AddSpeed").gameObject.GetComponent<Button>();
         GUILives = transform.Find("ExpCanvas/ExpUI/Lives").gameObject.GetComponent<Text>();
+        GUIInstruction = transform.Find("Instruction/Instruction1").gameObject.GetComponent<Text>();
 
         GUISkillPt.text = "Skill Points: " + skillPoints;
         GUIExpBar.maxValue = nextExp;
         GUIExpBar.value = exp;
 
         lives = startingLives;
+
+        StartCoroutine(destroyInstruction());
 	}
 	
+
     void FixedUpdate()
     {
         if (lives == 0)
@@ -150,6 +155,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+
     public void IncreaseKillCount()
     {
         exp += experiencePerKill;
@@ -180,6 +186,7 @@ public class GameManager : MonoBehaviour {
         if (skillPoints > 0)
         {
             heroControl.maxSpeed += 0.1f;
+            heroAttack.IncreaseAttackSpeed();
             DecreaseSkillPoint();
         }
     }
@@ -230,6 +237,13 @@ public class GameManager : MonoBehaviour {
         }
 
         spawning = false;
+    }
+
+
+    IEnumerator destroyInstruction()
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(GUIInstruction.gameObject);
     }
 
     float GetSpawnFrequency()

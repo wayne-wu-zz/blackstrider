@@ -6,12 +6,20 @@ public class AttackStateMachine : StateMachineBehaviour {
 
     public static int RESET = 0;
 
-    public int stateId;
+    public int attackID;
+    public float speed;
 
     protected StriderControl striderControl;
     protected StriderAttack attackControl;
-    private int nextAttack = AttackStateMachine.RESET;
+    protected virtual int nextAttack
+    {
+        get
+        {
+            return attackID+1;
+        }
+    }
     private bool next = false;
+     
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -22,24 +30,10 @@ public class AttackStateMachine : StateMachineBehaviour {
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         attackControl.SetAttacking(false);
-        if (!next)
-            Exit();
-        next = false;
+        attackControl.NextAttack();
     }
 
-    public virtual void Attack()
-    {
-
-    }
-
-    protected void Exit()
-    {
-        if (striderControl)
-        {
-            striderControl.Idle();
-            attackControl.Reset();
-        }
-    }
+    public virtual void Attack()  { }
 
     public void SetStriderControl(StriderControl striderControl)
     {
